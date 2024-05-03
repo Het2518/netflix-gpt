@@ -1,24 +1,24 @@
 import React, {useEffect} from 'react';
 import {useDispatch} from "react-redux";
 import {options} from "../utils/constants";
-import {addNowPlayingMovies} from "../utils/moviesSlice";
+import {addPopularMovies, addUpcomingMovies} from "../utils/moviesSlice";
 
-const useNowPlayingMovie = () => {
+const useUpcomingMovies = () => {
     const dispatch = useDispatch();
-    const getNowPlayingMovies = async () => {
+    const getUpcomingMovies = async () => {
         try {
-            const response = await fetch('https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1', options);
+            const response = await fetch('https://api.themoviedb.org/3/movie/upcoming?page=1', options);
             const json = await response.json();
             // console.log(json.results);
-            dispatch(addNowPlayingMovies(json.results));
+            dispatch(addUpcomingMovies(json.results));
         } catch (error) {
             console.error('Error fetching now playing movies:', error);
         }
     };
 
     useEffect(() => {
-        getNowPlayingMovies()
+        getUpcomingMovies()
     }, []);
 };
 
-export default useNowPlayingMovie;
+export default useUpcomingMovies;
