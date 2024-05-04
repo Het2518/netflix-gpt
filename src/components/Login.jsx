@@ -49,6 +49,7 @@ const Login = () => {
                         });
                     }).catch((error) => {
                         setErrorMessage(error.message);
+
                         console.log(error);
                     });
                 })
@@ -71,7 +72,7 @@ const Login = () => {
                             const {uid, email, displayName} = user;
                             dispatch(addUser({uid, email, displayName, name: userData.name}));
                         } else {
-                            console.log("No such document!");
+                         console.log("No such document!");
                         }
                     }).catch((error) => {
                         console.log("Error getting document:", error);
