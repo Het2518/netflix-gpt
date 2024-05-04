@@ -44,7 +44,6 @@ const Login = () => {
                             dispatch(addUser({ uid, email, displayName }));
                         }).catch((error) => {
                             setErrorMessage(error.message);
-                            console.log(error);
                         });
                     }).catch((error) => {
                         setErrorMessage(error.message);
