@@ -3,6 +3,7 @@ import useFetchMovieDetails from '../hooks/useFetchMovieDetails';
 import ReactPlayer from 'react-player';
 import { FaPlay, FaPlus, FaShareAlt, FaThumbsUp, FaThumbsDown } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import CommentSection from '../components/CommentSection';
 
 const MovieDetails = ({ movieId }) => {
     const { movie, loading, error } = useFetchMovieDetails(movieId, 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZDI0Y2I5MDlkYTNjNjU2MGJiNzZmNTA5Yzc4ODQ3NSIsInN1YiI6IjY2MzJmZjllODEzY2I2MDEyNzg2YzQ4YSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Bu0BdsQl6Sjm7gTyGOuuqET6QBLluwZtc1_QuOb8SNc');
@@ -96,6 +97,7 @@ const MovieDetails = ({ movieId }) => {
                                 ))}
                             </ul>
                         </div>
+                        <CommentSection movieId={movieId} />
                         {showTrailer && (
                             <div className="mb-8">
                                 <ReactPlayer

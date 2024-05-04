@@ -13,3 +13,4 @@ export const SUPPORTED_CONST = [
     {identifier: "hindi", language: "Hindi"},
     {identifier: "guj", language: "Gujarati"}]
 
+export const OPEN_AI_GPT_KEY = "sk-proj-GZXq8yi5qKe3chvtDUGcT3BlbkFJzxTnzr52P5z3trfNgic8"
