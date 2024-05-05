@@ -1,5 +1,5 @@
 // useMovieTrailer.js
-import React, { useEffect } from 'react';
+import  { useEffect } from 'react';
 import { useDispatch } from "react-redux";
 import { options } from "../utils/constants";
 import { addTrailerVideo } from "../utils/moviesSlice";
@@ -20,7 +20,8 @@ const UseMovieTrailer = ({ movieId }) => {
 
     useEffect(() => {
         getMovieVideos(movieId);
-    }, [movieId]);
+    }, [movieId, getMovieVideos]); // Include the missing dependency
+
 };
 
 export default UseMovieTrailer;

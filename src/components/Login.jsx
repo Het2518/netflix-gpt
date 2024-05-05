@@ -86,7 +86,7 @@ const Login = () => {
 
     return (
         <div className='relative flex flex-col items-center justify-center h-screen bg-black'>
-            <img src={netflixBGImage} className="absolute inset-0 object-cover w-full h-full opacity-60"/>
+            <img src={netflixBGImage} alt="netflixBGImage" className="absolute inset-0 object-cover w-full h-full opacity-60"/>
             <div className="relative inset-0 flex flex-col justify-center items-center">
                 <Header/>
                 <form onSubmit={(e) => {
