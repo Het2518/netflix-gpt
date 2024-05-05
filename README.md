@@ -15,7 +15,7 @@ NetflixGPT is a revolutionary project that brings the magic of Netflix to your f
 
 To get started with NetflixGPT, follow these simple steps:
 
-1. **Clone the Repository**: Clone this repository to your local machine using `git clone https://github.com/yourusername/netflixgpt.git`.
+1. **Clone the Repository**: Clone this repository to your local machine using `git clone https://github.com/Het2518/netflixgpt.git`.
 2. **Install Dependencies**: Navigate to the project directory and install the required dependencies using `npm install`.
 3. **Run the Project**: Start the project by running `npm start`. Your project will be available at `http://localhost:3000`.
 
