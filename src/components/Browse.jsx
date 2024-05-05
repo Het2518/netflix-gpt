@@ -11,17 +11,18 @@ import GptSearch from "./GptSearch";
 import {useSelector} from "react-redux";
 
 const Browse = () => {
-    const showGptSeacrch = useSelector(state => state.gpt.showGptSearch)
+    const showGptSearch = useSelector(state => state.gpt.showGptSearch)
     useNowPlayingMovie()
     usePopularMovies()
     useTopRatedMovies()
     useUpcomingMovies()
 
+
     return (
         <div>
             <Header/>
             {
-                showGptSeacrch ? <GptSearch/> :
+                showGptSearch ? <GptSearch/> :
                     (
                         <>
                             <MainContainer/>
@@ -29,7 +30,7 @@ const Browse = () => {
                         </>
                     )
             }
-            
+
             {/* Render your nowPlayingMovies here */}
         </div>
     );
