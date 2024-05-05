@@ -1,18 +1,25 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import useFetchMovieDetails from '../hooks/useFetchMovieDetails';
 import ReactPlayer from 'react-player';
-import { FaPlay, FaPlus, FaShareAlt, FaThumbsUp, FaThumbsDown } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+import {FaPlay, FaPlus, FaShareAlt, FaThumbsUp, FaThumbsDown} from 'react-icons/fa';
+import {useNavigate} from 'react-router-dom';
 import CommentSection from '../components/CommentSection';
 
-const MovieDetails = ({ movieId }) => {
-    const { movie, loading, error } = useFetchMovieDetails(movieId, 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZDI0Y2I5MDlkYTNjNjU2MGJiNzZmNTA5Yzc4ODQ3NSIsInN1YiI6IjY2MzJmZjllODEzY2I2MDEyNzg2YzQ4YSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Bu0BdsQl6Sjm7gTyGOuuqET6QBLluwZtc1_QuOb8SNc');
+const MovieDetails = ({movieId}) => {
+    const {
+        movie,
+        loading,
+        error
+    } = useFetchMovieDetails(movieId, 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZDI0Y2I5MDlkYTNjNjU2MGJiNzZmNTA5Yzc4ODQ3NSIsInN1YiI6IjY2MzJmZjllODEzY2I2MDEyNzg2YzQ4YSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Bu0BdsQl6Sjm7gTyGOuuqET6QBLluwZtc1_QuOb8SNc');
     const [showTrailer, setShowTrailer] = useState(false);
     const navigate = useNavigate();
 
-    if (loading) return <div className="flex justify-center items-center h-screen"><div className="w-16 h-16 border-4 border-red-600 border-double rounded-full animate-spin"></div></div>;
+    if (loading) return <div className="flex justify-center items-center h-screen">
+        <div className="w-16 h-16 border-4 border-red-600 border-double rounded-full animate-spin"></div>
+    </div>;
 
-    if (error) return <div className="flex justify-center items-center h-screen text-white">Error: {error.message}</div>;
+    if (error) return <div
+        className="flex justify-center items-center h-screen text-white">Error: {error.message}</div>;
 
     const isTrailerAvailable = movie.videos && movie.videos.results && movie.videos.results.length > 0;
 
@@ -29,6 +36,7 @@ const MovieDetails = ({ movieId }) => {
                     </div>
                     <div className="md:w-1/2 lg:w-3/5 md:pl-8 mt-8 md:mt-0">
                         <h1 className="text-4xl font-bold mb-4">{movie.title}</h1>
+
                         <p className="text-gray-400 mb-4">{movie.tagline}</p>
                         <div className="mb-4">
                             <span className="bg-red-600 text-white px-2 py-1 rounded-full mr-2">
@@ -53,24 +61,28 @@ const MovieDetails = ({ movieId }) => {
                                     }
                                 }}
                             >
-                                <FaPlay className="mr-2" /> Play Trailer
+                                <FaPlay className="mr-2"/> Play Trailer
                             </button>
                             {/* Other buttons */}
                         </div>
                         <div className="flex items-center mb-8">
-                            <button className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded mr-4 flex items-center">
-                                <FaPlus className="mr-2" /> Add to My List
+                            <button
+                                className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded mr-4 flex items-center">
+                                <FaPlus className="mr-2"/> Add to My List
                             </button>
-                            <button className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded flex items-center">
-                                <FaShareAlt className="mr-2" /> Share
+                            <button
+                                className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded flex items-center">
+                                <FaShareAlt className="mr-2"/> Share
                             </button>
                         </div>
                         <div className="flex items-center mb-8">
-                            <button className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded mr-4 flex items-center">
-                                <FaThumbsUp className="mr-2" /> Like
+                            <button
+                                className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded mr-4 flex items-center">
+                                <FaThumbsUp className="mr-2"/> Like
                             </button>
-                            <button className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded flex items-center">
-                                <FaThumbsDown className="mr-2" /> Dislike
+                            <button
+                                className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded flex items-center">
+                                <FaThumbsDown className="mr-2"/> Dislike
                             </button>
                         </div>
                         <div className="mb-8">
@@ -97,7 +109,7 @@ const MovieDetails = ({ movieId }) => {
                                 ))}
                             </ul>
                         </div>
-                        <CommentSection movieId={movieId} />
+                        <CommentSection movieId={movieId}/>
                         {showTrailer && (
                             <div className="mb-8">
                                 <ReactPlayer
