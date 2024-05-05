@@ -11,7 +11,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faSearch} from '@fortawesome/free-solid-svg-icons';
 import {toggleGptSearchView} from "../utils/gptSlice";
 import {SUPPORTED_CONST} from "../utils/constants";
-import language from "../utils/language";
+
 import {changeLanguage} from "../utils/configSlice";
 
 
