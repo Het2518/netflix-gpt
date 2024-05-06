@@ -1,6 +1,6 @@
 # NetflixGPT
 
-![NetflixGPT Logo](path/to/your/logo.png)
+![NetflixGPT Logo](https://imgs.search.brave.com/rFND6pguVWs1ea8udmqqxf0hgWovsC7ZQNWuMuTUdqw/rs:fit:500:0:0/g:ce/aHR0cHM6Ly9wbGF5/LWxoLmdvb2dsZXVz/ZXJjb250ZW50LmNv/bS9kRlZUZ2VoX2xx/a0IxZW1uSTN0WEFq/Ymc3Mk05Qll0MVc2/RTUyMl9Sa1NsT0Rn/c3FCQUxCYWhlRm1a/MFFBQUVDbm1rPXcy/NDAtaDQ4MC1ydw.jpeg)
 
 NetflixGPT is a revolutionary project that brings the magic of Netflix to your fingertips, powered by the latest in AI technology. Dive into a world where you can explore a vast library of movies, discover new favorites, and even command your movie choices with ease. All this, powered by the TMDB API and enhanced with GPT search capabilities.
 
