@@ -1,7 +1,7 @@
 // Header.jsx
 import React, {useEffect} from 'react';
 import watchingUserLogo from '../assets/watchingUserLogo.png';
-import netflixLogo from '../assets/netflix-logo.svg';
+import movieLogo from '../assets/moviemingle-high-resolution-logo-transparent.svg';
 import {auth} from '../utils/firebase';
 import {onAuthStateChanged, signOut} from 'firebase/auth';
 import {useNavigate} from "react-router-dom";
@@ -11,7 +11,6 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faSearch} from '@fortawesome/free-solid-svg-icons';
 import {toggleGptSearchView} from "../utils/gptSlice";
 import {SUPPORTED_CONST} from "../utils/constants";
-
 import {changeLanguage} from "../utils/configSlice";
 
 
@@ -56,7 +55,7 @@ const Header = () => {
     return (
         <div
             className="flex justify-between items-center px-8 fixed top-0 left-0 right-0 z-50 bg-gradient-to-b from-black">
-            <img className='w-36' src={netflixLogo} alt="Netflix Logo"/>
+            <img className='w-20 pt-4' src={movieLogo} alt="Netflix Logo"/>
             {user && (
                 <div className="flex items-center space-x-4">
                     {showGptSearch && <select className="p-2 rounded-lg bg-transparent border border-white text-red-700 "

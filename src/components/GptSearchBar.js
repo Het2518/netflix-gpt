@@ -30,7 +30,7 @@ const GptSearchBar = () => {
     }, [searchText]);
 
     return (
-        <div className="relative h-full">
+        <div className="relative h-full wfull">
             {/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
             <img
                 src={netflixBGImage}
