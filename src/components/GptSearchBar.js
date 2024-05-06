@@ -30,18 +30,19 @@ const GptSearchBar = () => {
     }, [searchText]);
 
     return (
-        <div className="relative h-full wfull">
-            {/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
-            <img
-                src={netflixBGImage}
-                alt="Background Image"
-                className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-black bg-opacity-70 flex justify-center items-center">
-                <div className="w-full max-w-md">
+        <div className="relative min-h-screen w-full">
+            <div className="fixed inset-0 z-0">
+                <img
+                    src={netflixBGImage}
+                    alt="Background Image"
+                    className="w-full h-full object-cover"
+                />
+            </div>
+            <div className="absolute inset-0 z-10 bg-black bg-opacity-70 flex justify-center items-center">
+                <div className="w-full max-w-md px-4">
                     <form className="flex items-center mb-4">
                         <input
-                            className="w-full py-4 px-6 rounded-l-full bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
+                            className="w-full py-2 md:py-4 px-4 md:px-6 rounded-l-full bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
                             type="text"
                             placeholder={language[languageKey].gptSearchBarPlaceholder}
                             value={searchText}
@@ -49,7 +50,7 @@ const GptSearchBar = () => {
                             aria-label="Search Movies"
                         />
                         <button
-                            className="bg-red-600 text-white py-4 px-6 rounded-r-full hover:bg-red-700 focus:outline-none focus:bg-red-700 transition duration-150 ease-in-out"
+                            className="bg-red-600 text-white py-2 md:py-4 px-4 md:px-6 rounded-r-full hover:bg-red-700 focus:outline-none focus:bg-red-700 transition duration-150 ease-in-out"
                             type="submit"
                             aria-label="Search"
                             disabled={isSearching}
@@ -74,7 +75,7 @@ const GptSearchBar = () => {
                                     className="p-4 text-white hover:bg-gray-800 transition-colors duration-200 cursor-pointer"
                                     onClick={() => navigate(`/movie/${movie.id}`)}
                                 >
-                                    <h3 className="text-xl font-semibold">{movie.title}</h3>
+                                    <h3 className="text-lg md:text-xl font-semibold">{movie.title}</h3>
                                 </div>
                             ))}
                         </div>

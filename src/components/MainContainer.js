@@ -1,25 +1,23 @@
-import {useSelector} from "react-redux";
+// MainContainer.jsx
+import { useSelector } from "react-redux";
 import VideoTitle from "./VideoTitle";
 import VideoBackground from "./VideoBackground";
 
 const MainContainer = () => {
     const movies = useSelector(store => store.movies?.nowPlayingMovies);
-    if (!movies) return null; // or handle the empty case as per your requirement
+    if (!movies) return null;
     const mainMovie = movies[0];
-    // console.log(mainMovie);
 
-    if (!mainMovie) return null; // or handle the undefined case
+    if (!mainMovie) return null;
 
-    const {
-        original_title,
-        overview,
-        id
-    } = mainMovie;
+    const { original_title, overview, id } = mainMovie;
 
     return (
-        <div className='bg-opacity-50'>
-            <VideoTitle title={original_title} overview={overview}/>
-            <VideoBackground movieId={id}/>
+        <div className="bg-opacity-50 h-full w-full">
+            <div className="relative h-full">
+                <VideoTitle title={original_title} overview={overview} />
+                <VideoBackground movieId={id} />
+            </div>
         </div>
     );
 };
