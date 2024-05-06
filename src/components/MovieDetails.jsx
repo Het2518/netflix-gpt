@@ -55,7 +55,8 @@ const MovieDetails = ({movieId}) => {
                                 className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-4 flex items-center"
                                 onClick={() => {
                                     if (isTrailerAvailable) {
-                                        setShowTrailer(true);
+                                        // Open the YouTube video in a new tab
+                                        window.open(`https://www.youtube.com/watch?v=${movie.videos.results[0].key}`, '_blank');
                                     } else {
                                         navigate('/error'); // Navigate to error page
                                     }

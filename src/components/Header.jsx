@@ -34,6 +34,9 @@ const Header = () => {
             });
     };
 
+    const handleHomePage = () => {
+        navigate('/browse');
+    }
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
@@ -56,7 +59,7 @@ const Header = () => {
     return (
         <div className="bg-gradient-to-b from-black fixed top-0 left-0 right-0 z-50">
             <div className="container mx-auto px-4 md:px-8 py-4 flex justify-between items-center">
-                <img className='w-20 md:w-24' src={movieLogo} alt="Netflix Logo" />
+                <img className='w-20 md:w-24 cursor-pointer' src={movieLogo} alt="Netflix Logo"  onClick={handleHomePage}/>
                 {user && (
                     <div className="hidden md:flex items-center space-x-4">
                         {showGptSearch && (
@@ -77,7 +80,7 @@ const Header = () => {
                                 onClick={handleGptSearchClick}
                             >
                                 <FontAwesomeIcon icon={faSearch} className="text-lg md:text-2xl pr-1" />
-                                {showGptSearch ? "Home Page" : "GPT Page"}
+                                {showGptSearch? "Home Page" : "GPT Page"}
                             </button>
                         </div>
                         <button
@@ -88,16 +91,18 @@ const Header = () => {
                         </button>
                     </div>
                 )}
-                <div className="md:hidden">
-                    <button
-                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                        className="text-white focus:outline-none"
-                    >
-                        <FontAwesomeIcon icon={faBars} className="text-2xl" />
-                    </button>
-                </div>
+                {user && (
+                    <div className="md:hidden">
+                        <button
+                            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                            className="text-white focus:outline-none"
+                        >
+                            <FontAwesomeIcon icon={faBars} className="text-2xl" />
+                        </button>
+                    </div>
+                )}
             </div>
-            {mobileMenuOpen && (
+            {mobileMenuOpen && user && (
                 <div className="md:hidden bg-black">
                     <div className="px-4 py-2 flex flex-col items-center">
                         {showGptSearch && (
@@ -118,7 +123,7 @@ const Header = () => {
                                 onClick={handleGptSearchClick}
                             >
                                 <FontAwesomeIcon icon={faSearch} className="text-lg pr-1" />
-                                {showGptSearch ? "Home Page" : "GPT Page"}
+                                {showGptSearch? "Home Page" : "GPT Page"}
                             </button>
                         </div>
                         <button
