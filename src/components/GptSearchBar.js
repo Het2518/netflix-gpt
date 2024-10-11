@@ -1,101 +1,148 @@
-// GptSearchBar.jsx
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {useSelector} from 'react-redux';
-import netflixBGImage from "../assets/netflix-background-image.jpg"; // Removed unused language import
+import {motion, AnimatePresence} from 'framer-motion';
+import {Search, X, Loader2, Star, Calendar} from 'lucide-react';
+import debounce from 'lodash/debounce';
 
-const GptSearchBar = () => {
-    // eslint-disable-next-line no-unused-vars
-    const languageKey = useSelector(store => store.config.language);
-    const [searchText, setSearchText] = useState('');
-    const [searchResults, setSearchResults] = useState([]);
-    const [isSearching, setIsSearching] = useState(false);
+const API_KEY = 'cd24cb909da3c6560bb76f509c788475';
+const IMG_BASE_URL = 'https://image.tmdb.org/t/p/w500';
+
+const MovieSearch = () => {
     const navigate = useNavigate();
+    const [query, setQuery] = useState('');
+    const [movies, setMovies] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const searchMovies = useCallback(async (searchText) => {
+        if (!searchText.trim()) {
+            setMovies([]);
+            return;
+        }
+
+        setIsLoading(true);
+        try {
+            const response = await fetch(
+                `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${searchText}`
+            );
+            const data = await response.json();
+            setMovies(data.results);
+        } catch (error) {
+            console.error('Error fetching movies:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    }, []);
+
+    const debouncedSearch = useCallback(
+        debounce((searchText) => {
+            searchMovies(searchText);
+        }, 300),
+        [searchMovies]
+    );
 
     useEffect(() => {
-        const fetchMovies = async () => {
-            setIsSearching(true);
-            if (searchText.trim() === '') {
-                setSearchResults([]);
-                setIsSearching(false);
-                return;
-            }
-            try {
-                const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=cd24cb909da3c6560bb76f509c788475&query=${searchText}`);
-                const data = await response.json();
-                setSearchResults(data.results);
-            } catch (error) {
-                console.error('Error fetching movies:', error);
-            } finally {
-                setIsSearching(false);
-            }
-        };
+        debouncedSearch(query);
+    }, [query, debouncedSearch]);
 
-        fetchMovies();
-    }, [searchText, navigate]);  // Added navigate to the dependency array
-
-    // Moved onClick function outside of the map
-    const handleMovieClick = (id) => {
-        navigate(`/movie/${id}`);
+    const handleMovieSelect = (movieId) => {
+        navigate(`/movie/${movieId}`);
     };
 
     return (
-        <div className="relative min-h-screen w-full">
-            <div className="fixed inset-0 z-0">
-                <img
-                    src={netflixBGImage}
-                    alt="Image"
-                    className="w-full h-full object-cover"
+        <div className="relative min-h-screen w-full flex items-center justify-center bg-black/90">
+            <div className="absolute inset-0 -z-10">
+                <motion.div
+                    className="absolute inset-0 bg-gradient-to-br from-red-900/20 to-black"
+                    initial={{opacity: 0}}
+                    animate={{opacity: 1}}
+                    transition={{duration: 1}}
                 />
             </div>
-            <div className="absolute inset-0 z-10 bg-black bg-opacity-70 flex justify-center items-center">
-                <div className="w-full max-w-md px-4">
-                    <form className="flex items-center mb-4">
+
+            <div className="w-full max-w-3xl px-4">
+                <motion.div
+                    initial={{y: -20, opacity: 0}}
+                    animate={{y: 0, opacity: 1}}
+                    transition={{duration: 0.5}}
+                >
+                    <h1 className="text-4xl md:text-5xl font-bold text-white text-center mb-8">
+                        Discover Movies
+                    </h1>
+                </motion.div>
+
+                <div className="rounded-lg border border-gray-800 bg-black/60 backdrop-blur-md shadow-xl">
+                    <div className="flex items-center border-b border-gray-800 px-3">
+                        <Search className="mr-2 h-4 w-4 shrink-0 text-gray-400"/>
                         <input
-                            className="w-full py-2 md:py-4 px-4 md:px-6 rounded-l-full bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
                             type="text"
-                            placeholder="Search for movies..." // Changed to static placeholder since language import was unused
-                            value={searchText}
-                            onChange={(e) => setSearchText(e.target.value)}
-                            aria-label="Search Movies"
+                            value={query}
+                            onChange={(e) => setQuery(e.target.value)}
+                            placeholder="Search movies..."
+                            className="flex h-14 w-full rounded-md bg-transparent py-3 text-lg text-white placeholder:text-gray-400 focus:outline-none"
                         />
-                        <button
-                            className="bg-red-600 text-white py-2 md:py-4 px-4 md:px-6 rounded-r-full hover:bg-red-700 focus:outline-none focus:bg-red-700 transition duration-150 ease-in-out"
-                            type="submit"
-                            aria-label="Search"
-                            disabled={isSearching}
-                        >
-                            {isSearching ? (
-                                <svg className="w-6 h-6 animate-spin" viewBox="0 0 24 24" fill="none"
-                                     stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                </svg>
-                            ) : (
-                                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                     strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <circle cx="11" cy="11" r="8"></circle>
-                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                                </svg>
-                            )}
-                        </button>
-                    </form>
-                    {searchResults.length > 0 && (
-                        <div className="max-h-96 overflow-y-auto custom-scrollbar bg-gray-900 rounded-lg shadow-lg">
-                            {searchResults.map((movie, index) => (
-                                <div
-                                    key={index}
-                                    className="p-4 text-white hover:bg-gray-800 transition-colors duration-200 cursor-pointer"
-                                    onClick={() => handleMovieClick(movie.id)}  // Using external handler for onClick
+                        {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin text-gray-400"/>}
+                        {query && !isLoading && (
+                            <button onClick={() => setQuery('')} className="text-gray-400 hover:text-white">
+                                <X className="h-4 w-4"/>
+                            </button>
+                        )}
+                    </div>
+                    <div className="max-h-[400px] overflow-y-auto hide-scrollbar">
+
+                        {movies.length === 0 && query && !isLoading && (
+                            <div className="py-6 text-center text-gray-400">
+                                No movies found.
+                            </div>
+                        )}
+                        <AnimatePresence>
+                            {movies.map((movie) => (
+                                <motion.div
+                                    key={movie.id}
+                                    initial={{opacity: 0, y: 20}}
+                                    animate={{opacity: 1, y: 0}}
+                                    exit={{opacity: 0, y: -20}}
+                                    transition={{duration: 0.2}}
                                 >
-                                    <h3 className="text-lg md:text-xl font-semibold">{movie.title}</h3>
-                                </div>
+                                    <div
+                                        onClick={() => handleMovieSelect(movie.id)}
+                                        className="px-4 py-3 cursor-pointer hover:bg-gray-800/50"
+                                    >
+                                        <div className="flex items-center space-x-4">
+                                            <div className="flex-shrink-0 h-16 w-12 overflow-hidden rounded">
+                                                <img
+                                                    src={movie.poster_path ? `${IMG_BASE_URL}${movie.poster_path}` : '/api/placeholder/120/180'}
+                                                    alt={movie.title}
+                                                    className="h-full w-full object-cover"
+                                                />
+                                            </div>
+                                            <div className="flex-1 min-w-0">
+                                                <p className="text-sm font-medium text-white truncate">
+                                                    {movie.title}
+                                                </p>
+                                                <div className="flex items-center mt-1 space-x-2 text-xs text-gray-400">
+                                                    <div className="flex items-center">
+                                                        <Calendar className="mr-1 h-3 w-3"/>
+                                                        <span>{movie.release_date?.split('-')[0] || 'N/A'}</span>
+                                                    </div>
+                                                    {movie.vote_average > 0 && (
+                                                        <div className="flex items-center">
+                                                            <Star
+                                                                className="mr-1 h-3 w-3 fill-yellow-500 text-yellow-500"/>
+                                                            <span>{movie.vote_average.toFixed(1)}</span>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </motion.div>
                             ))}
-                        </div>
-                    )}
+                        </AnimatePresence>
+                    </div>
                 </div>
             </div>
         </div>
     );
 };
 
-export default GptSearchBar;
+export default MovieSearch;

@@ -12,3 +12,16 @@
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
 }
+
+.hide-scrollbar {
+    scrollbar-width: thin;  /* Firefox */
+    scrollbar-color: transparent transparent;  /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+    width: 0px;  /* Chrome, Safari, and Opera */
+}
+
+.hide-scrollbar {
+    -ms-overflow-style: none;  /* IE 10+ */
+}
