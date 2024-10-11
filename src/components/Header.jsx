@@ -59,14 +59,16 @@ const Header = () => {
     }, [dispatch]);
 
     return (
-        <div className="bg-gradient-to-b from-black fixed top-0 left-0 right-0 z-50">
+        <header className="bg-gradient-to-b from-black fixed top-0 left-0 right-0 z-50">
             <div className="container mx-auto px-4 md:px-8 py-4 flex justify-between items-center">
+                {/* Logo Section */}
                 <img
                     className="w-20 md:w-24 cursor-pointer"
                     src={movieLogo}
-                    alt="Netflix Logo"
+                    alt="Movie Logo"
                     onClick={handleHomePage}
                 />
+                {/* Desktop Menu */}
                 {user && (
                     <div className="hidden md:flex items-center space-x-4">
                         {showGptSearch && (
@@ -104,6 +106,7 @@ const Header = () => {
                         </button>
                     </div>
                 )}
+                {/* Mobile Menu */}
                 {user && (
                     <div className="md:hidden">
                         <button
@@ -115,8 +118,9 @@ const Header = () => {
                     </div>
                 )}
             </div>
+            {/* Mobile Dropdown Menu */}
             {mobileMenuOpen && user && (
-                <div className="md:hidden bg-black">
+                <div className="md:hidden bg-black/80 backdrop-blur-lg py-4">
                     <div className="px-4 py-2 flex flex-col items-center">
                         {showGptSearch && (
                             <select
@@ -150,7 +154,7 @@ const Header = () => {
                     </div>
                 </div>
             )}
-        </div>
+        </header>
     );
 };
 
