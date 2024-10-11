@@ -6,7 +6,7 @@ import {auth} from "../utils/firebase";
 import {useDispatch} from "react-redux";
 import {addUser} from "../utils/userSlice";
 import {doc, setDoc, getDoc} from "firebase/firestore";
-import {db} from "../utils/firebase"; // Assuming you have a db instance exported from your Firebase setup
+import {db} from "../utils/firebase";
 import netflixBGImage from "../assets/netflix-background-image.jpg";
 
 const Login = () => {
@@ -27,7 +27,6 @@ const Login = () => {
         if (message) return;
 
         if (!showSignInForm) {
-            // Sign up
             createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
                 .then((userCredential) => {
                     const user = userCredential.user;
@@ -57,12 +56,9 @@ const Login = () => {
                     setErrorMessage(errorCode + " - " + errorMessage);
                 });
         } else {
-            // Sign in
             signInWithEmailAndPassword(auth, email.current.value, password.current.value)
                 .then((userCredential) => {
-                    // Signed in
                     const user = userCredential.user;
-                    // Retrieve the user's name from Firestore
                     const docRef = doc(db, "users", user.uid);
                     getDoc(docRef).then((docSnap) => {
                         if (docSnap.exists()) {
@@ -86,7 +82,8 @@ const Login = () => {
 
     return (
         <div className='relative flex flex-col items-center justify-center h-screen bg-black'>
-            <img src={netflixBGImage} alt="netflixBGImage" className="absolute inset-0 object-cover w-full h-full opacity-60"/>
+            <img src={netflixBGImage} alt="netflixBGImage"
+                 className="absolute inset-0 object-cover w-full h-full opacity-60"/>
             <div className="relative inset-0 flex flex-col justify-center items-center">
                 <Header/>
                 <form onSubmit={(e) => {

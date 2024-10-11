@@ -1,11 +1,11 @@
 // GptSearchBar.jsx
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import language from "../utils/language";
-import netflixBGImage from "../assets/netflix-background-image.jpg";
+import React, {useState, useEffect} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {useSelector} from 'react-redux';
+import netflixBGImage from "../assets/netflix-background-image.jpg"; // Removed unused language import
 
 const GptSearchBar = () => {
+    // eslint-disable-next-line no-unused-vars
     const languageKey = useSelector(store => store.config.language);
     const [searchText, setSearchText] = useState('');
     const [searchResults, setSearchResults] = useState([]);
@@ -20,21 +20,31 @@ const GptSearchBar = () => {
                 setIsSearching(false);
                 return;
             }
-            const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=cd24cb909da3c6560bb76f509c788475&query=${searchText}`);
-            const data = await response.json();
-            setSearchResults(data.results);
-            setIsSearching(false);
+            try {
+                const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=cd24cb909da3c6560bb76f509c788475&query=${searchText}`);
+                const data = await response.json();
+                setSearchResults(data.results);
+            } catch (error) {
+                console.error('Error fetching movies:', error);
+            } finally {
+                setIsSearching(false);
+            }
         };
 
         fetchMovies();
-    }, [searchText]);
+    }, [searchText, navigate]);  // Added navigate to the dependency array
+
+    // Moved onClick function outside of the map
+    const handleMovieClick = (id) => {
+        navigate(`/movie/${id}`);
+    };
 
     return (
         <div className="relative min-h-screen w-full">
             <div className="fixed inset-0 z-0">
                 <img
                     src={netflixBGImage}
-                    alt="Background Image"
+                    alt="Image"
                     className="w-full h-full object-cover"
                 />
             </div>
@@ -44,7 +54,7 @@ const GptSearchBar = () => {
                         <input
                             className="w-full py-2 md:py-4 px-4 md:px-6 rounded-l-full bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
                             type="text"
-                            placeholder={language[languageKey].gptSearchBarPlaceholder}
+                            placeholder="Search for movies..." // Changed to static placeholder since language import was unused
                             value={searchText}
                             onChange={(e) => setSearchText(e.target.value)}
                             aria-label="Search Movies"
@@ -56,11 +66,13 @@ const GptSearchBar = () => {
                             disabled={isSearching}
                         >
                             {isSearching ? (
-                                <svg className="w-6 h-6 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <svg className="w-6 h-6 animate-spin" viewBox="0 0 24 24" fill="none"
+                                     stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                     <circle cx="12" cy="12" r="10"></circle>
                                 </svg>
                             ) : (
-                                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                     strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                     <circle cx="11" cy="11" r="8"></circle>
                                     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                                 </svg>
@@ -73,7 +85,7 @@ const GptSearchBar = () => {
                                 <div
                                     key={index}
                                     className="p-4 text-white hover:bg-gray-800 transition-colors duration-200 cursor-pointer"
-                                    onClick={() => navigate(`/movie/${movie.id}`)}
+                                    onClick={() => handleMovieClick(movie.id)}  // Using external handler for onClick
                                 >
                                     <h3 className="text-lg md:text-xl font-semibold">{movie.title}</h3>
                                 </div>

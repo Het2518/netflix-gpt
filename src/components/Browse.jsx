@@ -1,4 +1,3 @@
-// Browse.js
 import React from 'react';
 import Header from './Header';
 import useNowPlayingMovie from "../hooks/useNowPlayingMovie";
@@ -16,8 +15,6 @@ const Browse = () => {
     usePopularMovies()
     useTopRatedMovies()
     useUpcomingMovies()
-
-
     return (
         <div>
             <Header/>
@@ -30,10 +27,7 @@ const Browse = () => {
                         </>
                     )
             }
-
-            {/* Render your nowPlayingMovies here */}
         </div>
     );
 };
-
 export default Browse;
