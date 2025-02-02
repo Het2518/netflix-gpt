@@ -25,3 +25,14 @@
 .hide-scrollbar {
     -ms-overflow-style: none;  /* IE 10+ */
 }
+
+/* Add to your global CSS file */
+.chat-transition {
+    transition: all 0.3s ease-in-out;
+  }
+  
+  @media (max-width: 768px) {
+    .chat-container {
+      touch-action: none; /* Prevents scrolling behind modal on iOS */
+    }
+  }
