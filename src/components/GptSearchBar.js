@@ -13,11 +13,13 @@ const MovieSearch = () => {
     const [movies, setMovies] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
+
     const searchMovies = useCallback(async (searchText) => {
         if (!searchText.trim()) {
             setMovies([]);
             return;
         }
+
 
         setIsLoading(true);
         try {
